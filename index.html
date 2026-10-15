@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Outubro Rosa - Confirmação de Presença</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f9f9f9;
+      display: flex;
+      justify-content: center;
+      padding: 20px;
+    }
+    .card {
+      background: #ffffff;
+      max-width: 600px;
+      width: 100%;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    h1 {
+      color: #d81b60;
+      text-align: center;
+      margin-bottom: 5px;
+      font-size: 28px;
+    }
+    .subtitle {
+      text-align: center;
+      color: #333;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+    .info-box {
+      border: 1px solid #d81b60;
+      background-color: #fce4ec;
+      padding: 15px;
+      text-align: center;
+      border-radius: 4px;
+      margin-bottom: 25px;
+      color: #333;
+      line-height: 1.5;
+    }
+    .form-group {
+      margin-bottom: 20px;
+    }
+    label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 8px;
+      color: #333;
+    }
+    input[type="text"], input[type="tel"] {
+      width: 100%;
+      padding: 10px;
+      border: none;
+      border-bottom: 2px solid #e0e0e0;
+      font-size: 16px;
+      box-sizing: border-box;
+      outline: none;
+    }
+    input[type="text"]:focus, input[type="tel"]:focus {
+      border-bottom-color: #d81b60;
+    }
+    .radio-group label {
+      font-weight: normal;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 8px;
+      cursor: pointer;
+    }
+    .btn-submit {
+      width: 100%;
+      background-color: #25d366;
+      color: white;
+      border: none;
+      padding: 14px;
+      font-size: 16px;
+      font-weight: bold;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-top: 15px;
+    }
+    .btn-submit:hover {
+      background-color: #1eb857;
+    }
+    .footer-text {
+      text-align: center;
+      color: #d81b60;
+      font-style: italic;
+      margin-top: 25px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="card">
+  <h1>OUTUBRO ROSA</h1>
+  <div class="subtitle">Um Encontro sobre Cuidado, Saúde e Prevenção</div>
+
+  <div class="info-box">
+    <strong>Data:</strong> 20 de novembro às 19:00h<br>
+    <strong>Local:</strong> Associação Comercial e Industrial de Iturama
+  </div>
+
+  <form id="rsvpForm">
+    <div class="form-group">
+      <label for="nome">1. Nome Completo:</label>
+      <input type="text" id="nome" required placeholder="Digite seu nome completo">
+    </div>
+
+    <div class="form-group">
+      <label for="telefone">2. Telefone de Contato (com DDD):</label>
+      <input type="tel" id="telefone" required placeholder="(34) 99999-9999">
+    </div>
+
+    <div class="form-group radio-group">
+      <label>3. Você vai comparecer ao evento?</label>
+      <label><input type="radio" name="presenca" value="Sim, com certeza!" required> Sim, com certeza!</label>
+      <label><input type="radio" name="presenca" value="Não poderei comparecer" required> Não poderei comparecer</label>
+    </div>
+
+    <button type="button" class="btn-submit" onclick="enviarParaWhatsApp()">Enviar Resposta via WhatsApp</button>
+  </form>
+
+  <div class="footer-text">Agradecemos a sua resposta. Nos vemos lá!</div>
+</div>
+
+<script>
+  function enviarParaWhatsApp() {
+    const nome = document.getElementById('nome').value;
+    const telefone = document.getElementById('telefone').value;
+    const presenca = document.querySelector('input[name="presenca"]:checked');
+
+    if (!nome || !telefone || !presenca) {
+      alert("Por favor, preencha todos os campos do formulário.");
+      return;
+    }
+
+    const numeroWhatsApp = "553498937014";
+    const mensagem = `*Confirmação - Outubro Rosa*%0A%0A` +
+                     `*Nome:* ${encodeURIComponent(nome)}%0A` +
+                     `*Telefone:* ${encodeURIComponent(telefone)}%0A` +
+                     `*Presença:* ${encodeURIComponent(presenca.value)}`;
+
+    const url = `https://wa.me/${numeroWhatsApp}?text=${mensagem}`;
+    window.open(url, '_blank');
+  }
+</script>
+
+</body>
+</html>

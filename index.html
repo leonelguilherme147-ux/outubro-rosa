@@ -71,6 +71,31 @@
       margin-bottom: 8px;
       cursor: pointer;
     }
+    .notice-box {
+      background-color: #fff8e1;
+      border-left: 4px solid #ffb300;
+      padding: 15px;
+      border-radius: 4px;
+      margin-bottom: 20px;
+    }
+    .notice-title {
+      font-weight: bold;
+      color: #b78103;
+      margin-bottom: 8px;
+      font-size: 15px;
+    }
+    .checkbox-label {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 14px;
+      color: #444;
+      line-height: 1.4;
+      cursor: pointer;
+    }
+    .checkbox-label input {
+      margin-top: 3px;
+    }
     .btn-submit {
       width: 100%;
       background-color: #25d366;
@@ -122,6 +147,14 @@
       <label><input type="radio" name="presenca" value="Não poderei comparecer" required> Não poderei comparecer</label>
     </div>
 
+    <div class="notice-box">
+      <div class="notice-title">📷 Aviso sobre Registro e Imagem do Evento</div>
+      <label class="checkbox-label">
+        <input type="checkbox" id="aceitoTermos" required>
+        <span>Estou ciente de que este evento será fotografado e gravado para fins de registro institucional e divulgação nos canais da empresa. Ao confirmar minha presença, concordo com o uso da minha imagem nesses materiais.</span>
+      </label>
+    </div>
+
     <button type="button" class="btn-submit" onclick="enviarParaWhatsApp()">Enviar Resposta via WhatsApp</button>
   </form>
 
@@ -133,9 +166,15 @@
     const nome = document.getElementById('nome').value;
     const telefone = document.getElementById('telefone').value;
     const presenca = document.querySelector('input[name="presenca"]:checked');
+    const aceitoTermos = document.getElementById('aceitoTermos').checked;
 
     if (!nome || !telefone || !presenca) {
       alert("Por favor, preencha todos os campos do formulário.");
+      return;
+    }
+
+    if (!aceitoTermos) {
+      alert("Por favor, marque a caixa confirmando que está ciente sobre os registros de imagem do evento.");
       return;
     }
 
@@ -143,7 +182,8 @@
     const mensagem = `*Confirmação - Outubro Rosa*%0A%0A` +
                      `*Nome:* ${encodeURIComponent(nome)}%0A` +
                      `*Telefone:* ${encodeURIComponent(telefone)}%0A` +
-                     `*Presença:* ${encodeURIComponent(presenca.value)}`;
+                     `*Presença:* ${encodeURIComponent(presenca.value)}%0A` +
+                     `*Ciência de Imagem:* Ciente e De Acordo`;
 
     const url = `https://wa.me/${numeroWhatsApp}?text=${mensagem}`;
     window.open(url, '_blank');
